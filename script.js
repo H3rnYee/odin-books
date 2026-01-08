@@ -27,10 +27,19 @@ function displayBooks() {
     removeButton.textContent = `Remove Book`
     
     removeButton.addEventListener("click", () => {
-        div.remove();
+        removeBook(book.id)
     })
     div.appendChild(removeButton);
     document.body.appendChild(div);
+    function removeBook(id) {
+        const index = myLibrary.findIndex(book => book.id === id);
+
+        if (index !== -1) {
+            myLibrary.splice(index, 1);
+        }
+
+        displayBooks();
+        }
   });
 }
 
