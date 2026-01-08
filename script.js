@@ -23,8 +23,19 @@ function displayBooks() {
     div.classList.add("book-card");
     div.textContent = `Title: ${book.title} | ID: ${book.id}`;
     document.body.appendChild(div);
+    const removeButton = document.createElement('button');
+    removeButton.textContent = `Remove Book`
+    
+    removeButton.addEventListener("click", () => {
+        div.remove();
+    })
+    div.appendChild(removeButton);
+    document.body.appendChild(div);
   });
 }
+
+
+
 
 openDialogBtn.addEventListener("click", () => {
   dialog.showModal();
