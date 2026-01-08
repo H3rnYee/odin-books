@@ -8,6 +8,7 @@ const titleInput = document.getElementById("title");
 function Book(title) {
   this.title = title;
   this.id = crypto.randomUUID();
+  this.status = 'Unread'
 }
 
 function addBookToLibrary(title) {
@@ -21,28 +22,40 @@ function displayBooks() {
   myLibrary.forEach(book => {
     const div = document.createElement("div");
     div.classList.add("book-card");
-    div.textContent = `Title: ${book.title} | ID: ${book.id}`;
-    document.body.appendChild(div);
-    const removeButton = document.createElement('button');
-    removeButton.textContent = `Remove Book`
-    
+    div.textContent = `Title: ${book.title} |ID: ${book.id}| Status: ${book.status}`;
+
+    const removeButton = document.createElement("button");
+    removeButton.textContent = "Remove Book";
     removeButton.addEventListener("click", () => {
-        removeBook(book.id)
-    })
+      removeBook(book.id);
+    });
+
+    const statusButton = document.createElement("button");
+    statusButton.textContent = "Change Status";
+    statusButton.addEventListener("click", () => {
+      book.toggleStatus();
+      displayBooks();
+    });
+
     div.appendChild(removeButton);
+    div.appendChild(statusButton);
     document.body.appendChild(div);
-    function removeBook(id) {
-        const index = myLibrary.findIndex(book => book.id === id);
-
-        if (index !== -1) {
-            myLibrary.splice(index, 1);
-        }
-
-        displayBooks();
-        }
   });
 }
 
+function removeBook(id) {
+  const index = myLibrary.findIndex(book => book.id === id);
+
+  if (index !== -1) {
+    myLibrary.splice(index, 1);
+  }
+
+  displayBooks();
+}
+
+Book.prototype.toggleStatus = function () {
+  this.status = this.status === "Unread" ? "Read" : "Unread";
+};
 
 
 
